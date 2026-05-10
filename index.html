@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PeopleConnect ZA — EngageZA Platform</title>
+  <meta name="description" content="EngageZA connects people to the organisations that serve them. Book a live demo today." />
+  <style>
+    /* ── Reset & tokens ────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #1B4FD8;
+      --blue-dk: #0F35B8;
+      --orange:  #F97316;
+      --dark:    #0F172A;
+      --mid:     #334155;
+      --muted:   #64748B;
+      --border:  #CBD5E1;
+      --light:   #F8FAFC;
+      --white:   #FFFFFF;
+
+      --radius-sm: 6px;
+      --radius:    12px;
+      --radius-lg: 20px;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+      --shadow:    0 4px 16px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.14);
+
+      --transition: .2s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Buttons ───────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background var(--transition), color var(--transition),
+                  border-color var(--transition), transform var(--transition),
+                  box-shadow var(--transition);
+    }
+    .btn:active { transform: translateY(1px); }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+    }
+    .btn-primary:hover {
+      background: #1642BE;
+      box-shadow: 0 4px 14px rgba(27,79,216,.4);
+    }
+
+    .btn-orange {
+      background: var(--orange);
+      color: var(--white);
+    }
+    .btn-orange:hover {
+      background: #E8610A;
+      box-shadow: 0 4px 14px rgba(249,115,22,.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--blue);
+      border-color: var(--blue);
+    }
+    .btn-outline:hover {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .btn-outline-white {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,.6);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,.15);
+      border-color: var(--white);
+    }
+
+    .btn-lg {
+      padding: 15px 32px;
+      font-size: 16px;
+    }
+
+    /* ── Section helpers ───────────────────────────────────────────────── */
+    section { padding: 80px 0; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: rgba(27,79,216,.08);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -.02em;
+      color: var(--dark);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 580px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-header .section-sub { margin: 0 auto; }
+
+    /* ── Logo SVG ──────────────────────────────────────────────────────── */
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .logo-text .za { color: var(--orange); }
+    .logo-text .pc { color: var(--dark); }
+
+    /* ── ①  HEADER / NAV ───────────────────────────────────────────────── */
+    #header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(248,250,252,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--mid);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--blue); }
+
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--dark);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+      padding: 12px 0;
+    }
+    .mobile-menu a {
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--mid);
+      display: block;
+    }
+    .mobile-menu a:hover { color: var(--blue); background: var(--light); }
+    .mobile-menu .btn {
+      margin: 12px 24px 4px;
+      justify-content: center;
+    }
+
+    /* ── ②  HERO ───────────────────────────────────────────────────────── */
+    #hero {
+      background: linear-gradient(135deg, #0A1F5E 0%, #1B4FD8 55%, #2D6AFF 100%);
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(255,255,255,.06)'/%3E%3C/svg%3E") repeat;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      right: -200px;
+      top: -200px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(249,115,22,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,.9);
+      margin-bottom: 28px;
+    }
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: #4ADE80;
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .6; transform: scale(1.3); }
+    }
+
+    .hero-title {
+      font-size: clamp(36px, 5.5vw, 60px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--orange);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      color: rgba(255,255,255,.78);
+      max-width: 580px;
+      margin-bottom: 40px;
+      line-height: 1.65;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,.15);
+    }
+    .stat-item {}
+    .stat-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255,255,255,.6);
+      margin-top: 4px;
+    }
+
+    /* ── ③  WHAT IS ENGAGEZA ───────────────────────────────────────────── */
+    #what {
+      background: var(--white);
+    }
+
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .what-visual {
+      background: linear-gradient(135deg, #EEF2FF 0%, #DBEAFE 100%);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .mockup-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .mockup-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .mockup-icon.blue  { background: rgba(27,79,216,.12); }
+    .mockup-icon.orange { background: rgba(249,115,22,.12); }
+    .mockup-icon.green  { background: rgba(34,197,94,.12); }
+
+    .mockup-text {}
+    .mockup-title { font-weight: 700; font-size: 14px; color: var(--dark); }
+    .mockup-desc  { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    .what-content {}
+    .what-list {
+      list-style: none;
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .what-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .check-icon {
+      width: 22px; height: 22px;
+      background: rgba(27,79,216,.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .check-icon svg { width: 12px; height: 12px; stroke: var(--blue); }
+    .what-list li p { font-size: 15px; color: var(--mid); line-height: 1.5; }
+    .what-list li strong { color: var(--dark); }
+
+    /* ── ④  WHO IT'S FOR ───────────────────────────────────────────────── */
+    #who { background: var(--light); }
+
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .who-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .who-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .who-emoji {
+      font-size: 40px;
+      line-height: 1;
+    }
+
+    .who-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .who-card p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .who-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      align-self: flex-start;
+      margin-top: auto;
+    }
+    .who-tag.blue   { background: rgba(27,79,216,.1);   color: var(--blue); }
+    .who-tag.orange { background: rgba(249,115,22,.1);  color: var(--orange); }
+    .who-tag.green  { background: rgba(22,163,74,.1);   color: #16A34A; }
+
+    /* ── ⑤  HOW IT WORKS ───────────────────────────────────────────────── */
+    #how { background: var(--white); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 48px;
+      left: calc(16.66% + 28px);
+      right: calc(16.66% + 28px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--orange));
+      z-index: 0;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .step:nth-child(1) .step-num { background: var(--blue); }
+    .step:nth-child(2) .step-num { background: linear-gradient(135deg, var(--blue), var(--orange)); }
+    .step:nth-child(3) .step-num { background: var(--orange); }
+
+    .step-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .step-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── ⑥  PRICING ────────────────────────────────────────────────────── */
+    #pricing { background: var(--light); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .pricing-card.featured {
+      border-color: var(--blue);
+      border-width: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 4px 40px;
+      transform: rotate(45deg);
+    }
+
+    .pricing-tier {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+    .pricing-price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .pricing-price .amount {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--dark);
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+    .pricing-price .currency {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .pricing-price .period {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .pricing-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: -12px;
+    }
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--mid);
+    }
+    .pricing-features .tick {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(27,79,216,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pricing-features .tick svg { width: 10px; height: 10px; stroke: var(--blue); }
+
+    /* ── ⑦  CONTACT ────────────────────────────────────────────────────── */
+    #contact { background: var(--white); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact-info {}
+    .contact-info p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-top: 16px;
+      line-height: 1.7;
+    }
+    .contact-details {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .contact-item-icon {
+      width: 44px; height: 44px;
+      background: rgba(27,79,216,.08);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-item-icon svg { width: 20px; height: 20px; stroke: var(--blue); }
+    .contact-item-text {}
+    .contact-item-text .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .contact-item-text .value { font-size: 15px; color: var(--dark); font-weight: 500; margin-top: 2px; }
+
+    .form-card {
+      background: var(--light);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      border: 1px solid var(--border);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .form-group:last-of-type { margin-bottom: 0; }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--mid);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--dark);
+      background: var(--white);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(27,79,216,.12);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      color: #16A34A;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    /* ── ⑧  FOOTER ─────────────────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.7);
+      padding: 48px 0 32px;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .footer-brand .logo-text .pc { color: rgba(255,255,255,.9); }
+    .footer-brand p {
+      font-size: 14px;
+      margin-top: 12px;
+      max-width: 280px;
+      line-height: 1.6;
+    }
+
+    .footer-links h4 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 16px;
+    }
+    .footer-links ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,.65);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 28px;
+      font-size: 13px;
+      color: rgba(255,255,255,.35);
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu.open { display: flex; }
+
+      .what-grid,
+      .contact-grid { grid-template-columns: 1fr; }
+
+      .steps::before { display: none; }
+      .steps { grid-template-columns: 1fr; gap: 40px; }
+      .step { align-items: flex-start; text-align: left; flex-direction: row; gap: 20px; }
+      .step-num { flex-shrink: 0; margin-bottom: 0; }
+    }
+
+    @media (max-width: 720px) {
+      section { padding: 56px 0; }
+
+      .who-grid,
+      .pricing-grid { grid-template-columns: 1fr; }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      #hero { padding: 72px 0 56px; }
+
+      .hero-stats { gap: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .btn-lg { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ① HEADER                                                               -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<header id="header">
+  <div class="container">
+    <nav class="nav">
+      <a href="#" class="logo" aria-label="PeopleConnect ZA">
+        <svg width="50" height="36" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <clipPath id="logo-clip-nav">
+              <circle cx="8" cy="10" r="8"/>
+            </clipPath>
+          </defs>
+          <circle cx="8"  cy="10" r="8" fill="#1B4FD8"/>
+          <circle cx="20" cy="10" r="8" fill="#1B4FD8"/>
+          <circle cx="20" cy="10" r="8" fill="#0F35B8" clip-path="url(#logo-clip-nav)"/>
+          <circle cx="14" cy="10" r="2.2" fill="white"/>
+        </svg>
+        <span class="logo-text">
+          <span class="pc">PeopleConnect</span><span class="za">ZA</span>
+        </span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#what">Product</a></li>
+        <li><a href="#who">Who it's for</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-outline" style="padding:9px 20px;font-size:14px;">Get in touch</a>
+        <a href="#contact" class="btn btn-primary" style="padding:9px 20px;font-size:14px;">Book a Demo</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#what" onclick="closeMobile()">Product</a>
+    <a href="#who" onclick="closeMobile()">Who it's for</a>
+    <a href="#how" onclick="closeMobile()">How it works</a>
+    <a href="#pricing" onclick="closeMobile()">Pricing</a>
+    <a href="#contact" onclick="closeMobile()">Contact</a>
+    <a href="#contact" class="btn btn-primary" onclick="closeMobile()">Book a Demo</a>
+  </div>
+</header>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ② HERO                                                                  -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Now live — EngageZA by PeopleConnect ZA
+      </div>
+
+      <h1 class="hero-title">
+        Connecting people to the<br/>
+        <em>organisations that serve them</em>
+      </h1>
+
+      <p class="hero-sub">
+        EngageZA is a smart engagement platform that helps municipalities, political parties, and businesses communicate directly with the communities they serve — no technical skills required.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-orange btn-lg">See a live demo</a>
+        <a href="#contact" class="btn btn-outline-white btn-lg">Get in touch</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">3 min</div>
+          <div class="stat-label">Average setup time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Mobile friendly</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">To get started</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">SA-built</div>
+          <div class="stat-label">For South African orgs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ③ WHAT IS ENGAGEZA                                                      -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<section id="what">
+  <div class="container">
+    <div class="what-grid">
+      <div class="what-visual">
+        <div class="mockup-card">
+          <div class="mockup-icon blue">📢</div>
+          <div class="mockup-text">
+            <div class="mockup-title">Send announcements instantly</div>
+            <div class="mockup-desc">Reach your community in seconds</div>
+          </div>
+        </div>
+        <div class="mockup-card">
+          <div class="mockup-icon orange">💬</div>
+          <div class="mockup-text">
+            <div class="mockup-title">Two-way community chat</div>
+            <div class="mockup-desc">Let people ask questions and get answers</div>
+          </div>
+        </div>
+        <div class="mockup-card">
+          <div class="mockup-icon green">📊</div>
+          <div class="mockup-text">
+            <div class="mockup-title">Track engagement</div>
+            <div class="mockup-desc">See who's reading and responding</div>
+          </div>
+        </div>
+        <div class="mockup-card">
+          <div class="mockup-icon blue">🤖</div>
+          <div class="mockup-text">
+            <div class="mockup-title">AI-powered assistant</div>
+            <div class="mockup-desc">Answer common questions automatically</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="what-content">
+        <span class="section-label">What is EngageZA</span>
+        <h2 class="section-title">Your organisation, always connected</h2>
+        <p class="section-sub">EngageZA gives any organisation a branded communication hub — like having a dedicated app for your community, without the cost or complexity.</p>
+
+        <ul class="what-list">
+          <li>
+            <div class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2 6 5 9 10 3"/>
+              </svg>
+            </div>
+            <p><strong>No coding, no IT team needed.</strong> Set up your branded page in minutes using our simple dashboard.</p>
+          </li>
+          <li>
+            <div class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2 6 5 9 10 3"/>
+              </svg>
+            </div>
+            <p><strong>Your brand, your colours.</strong> Upload your logo and we handle the rest — it looks like yours.</p>
+          </li>
+          <li>
+            <div class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2 6 5 9 10 3"/>
+              </svg>
+            </div>
+            <p><strong>Works on any device.</strong> Community members access it from their phone, tablet, or desktop — no app download required.</p>
+          </li>
+          <li>
+            <div class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2 6 5 9 10 3"/>
+              </svg>
+            </div>
+            <p><strong>Built-in AI assistant.</strong> An intelligent chatbot answers your members' questions 24/7, even when you're offline.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ④ WHO IT'S FOR                                                          -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<section id="who">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Who it's for</span>
+      <h2 class="section-title">Built for organisations that serve people</h2>
+      <p class="section-sub">Whether you're governing a ward, campaigning in a constituency, or running a local business — EngageZA is built for you.</p>
+    </div>
+
+    <div class="who-grid">
+      <!-- Municipalities -->
+      <div class="who-card">
+        <div class="who-emoji">🏛️</div>
+        <h3>Municipalities</h3>
+        <p>Keep residents informed about service delivery updates, load-shedding schedules, public meetings, and infrastructure maintenance — all in one place residents trust.</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; color:var(--muted);">
+          <li>✓ Ward-level announcements</li>
+          <li>✓ Service disruption alerts</li>
+          <li>✓ Resident Q&amp;A channels</li>
+          <li>✓ Meeting notices &amp; minutes</li>
+        </ul>
+        <span class="who-tag blue">🏛️ Local Government</span>
+      </div>
+
+      <!-- Political Parties -->
+      <div class="who-card">
+        <div class="who-emoji">🗳️</div>
+        <h3>Political Parties</h3>
+        <p>Engage voters, share your manifesto, coordinate volunteers, and build a loyal following between election cycles — not just at voting time.</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; color:var(--muted);">
+          <li>✓ Branded party hub</li>
+          <li>✓ Campaign updates</li>
+          <li>✓ Volunteer coordination</li>
+          <li>✓ Voter engagement tools</li>
+        </ul>
+        <span class="who-tag orange">🗳️ Political Parties</span>
+      </div>
+
+      <!-- Small Businesses -->
+      <div class="who-card">
+        <div class="who-emoji">🏪</div>
+        <h3>Small Businesses</h3>
+        <p>Give your customers a direct line to your business. Share promotions, updates, and support — building loyalty without the high cost of traditional marketing.</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; color:var(--muted);">
+          <li>✓ Customer announcements</li>
+          <li>✓ Promotions &amp; deals</li>
+          <li>✓ AI-powered FAQ bot</li>
+          <li>✓ Direct customer chat</li>
+        </ul>
+        <span class="who-tag green">🏪 Small Business</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ⑤ HOW IT WORKS                                                          -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<section id="how">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">How it works</span>
+      <h2 class="section-title">Up and running in three steps</h2>
+      <p class="section-sub">No IT department. No long contracts. No complexity. Just connect.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Sign up</div>
+          <p class="step-desc">Create your free account in minutes. Tell us about your organisation and we'll set up your workspace with your details ready to go.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Customise</div>
+          <p class="step-desc">Upload your logo, choose your colours, add your contact info, and configure your AI assistant. Your branded hub is ready to share.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Go live</div>
+          <p class="step-desc">Share your unique link with your community. They open it in any browser — no app download needed — and start engaging immediately.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ⑥ PRICING                                                               -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Pricing</span>
+      <h2 class="section-title">Simple, transparent pricing</h2>
+      <p class="section-sub">Start free. Scale as you grow. No surprises.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="pricing-card">
+        <div>
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-price">
+            <span class="amount">Free</span>
+          </div>
+          <p class="pricing-desc" style="margin-top:8px;">30-day free trial — no credit card required. Perfect for getting started.</p>
+        </div>
+        <ul class="pricing-features">
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            1 branded hub
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Up to 100 community members
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Announcements &amp; basic chat
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            AI assistant (limited)
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Email support
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" style="justify-content:center;">Start free trial</a>
+      </div>
+
+      <!-- Growth -->
+      <div class="pricing-card featured">
+        <div>
+          <div class="pricing-tier">Growth</div>
+          <div class="pricing-price">
+            <span class="currency">R</span>
+            <span class="amount">499</span>
+            <span class="period">/month</span>
+          </div>
+          <p class="pricing-desc">The complete toolkit for organisations serious about community engagement.</p>
+        </div>
+        <ul class="pricing-features">
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            1 branded hub
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Unlimited community members
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Full AI assistant
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Analytics &amp; engagement reports
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Priority email &amp; phone support
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Custom domain support
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="justify-content:center;">Get started</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card">
+        <div>
+          <div class="pricing-tier">Enterprise</div>
+          <div class="pricing-price">
+            <span class="amount" style="font-size:32px;">Custom</span>
+          </div>
+          <p class="pricing-desc" style="margin-top:8px;">For large municipalities, national parties, or multi-location businesses with complex needs.</p>
+        </div>
+        <ul class="pricing-features">
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Multiple branded hubs
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Unlimited everything
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Custom AI training
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            API &amp; system integrations
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            Dedicated account manager
+          </li>
+          <li>
+            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
+            SLA &amp; on-site training
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" style="justify-content:center;">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ⑦ CONTACT FORM                                                          -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="section-label">Contact us</span>
+        <h2 class="section-title">Let's talk about your organisation</h2>
+        <p>We'd love to show you how EngageZA can work for your municipality, party, or business. Fill in the form and we'll be in touch within one business day.</p>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="contact-item-text">
+              <div class="label">Email</div>
+              <div class="value">admin@peopleconnect.co.za</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="contact-item-text">
+              <div class="label">Registered in</div>
+              <div class="value">South Africa</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+            <div class="contact-item-text">
+              <div class="label">Company Number</div>
+              <div class="value">2026/349570/07</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full name *</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email address *</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="org">Organisation *</label>
+            <input type="text" id="org" name="org" placeholder="Municipality, party, or business name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="interest">I'm interested in</label>
+            <select id="interest" name="interest">
+              <option value="">Select an option…</option>
+              <option value="demo">Booking a live demo</option>
+              <option value="starter">Starting a free trial</option>
+              <option value="growth">Growth plan</option>
+              <option value="enterprise">Enterprise pricing</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" placeholder="Tell us a bit about your organisation and what you're looking to achieve…" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg form-submit">
+            Send message
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+
+          <div class="form-success" id="formSuccess">
+            ✓ Thanks! We'll be in touch within one business day.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ⑧ FOOTER                                                                -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo" aria-label="PeopleConnect ZA">
+          <svg width="44" height="32" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <clipPath id="logo-clip-footer">
+                <circle cx="8" cy="10" r="8"/>
+              </clipPath>
+            </defs>
+            <circle cx="8"  cy="10" r="8" fill="rgba(255,255,255,0.9)"/>
+            <circle cx="20" cy="10" r="8" fill="rgba(255,255,255,0.9)"/>
+            <circle cx="20" cy="10" r="8" fill="rgba(200,210,255,0.6)" clip-path="url(#logo-clip-footer)"/>
+            <circle cx="14" cy="10" r="2.2" fill="#1B4FD8"/>
+          </svg>
+          <span class="logo-text footer-brand">
+            <span class="pc">PeopleConnect</span><span class="za">ZA</span>
+          </span>
+        </a>
+        <p>Connecting South African organisations with the communities they serve — one conversation at a time.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#what">What is EngageZA</a></li>
+          <li><a href="#who">Who it's for</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#contact">Contact us</a></li>
+          <li><a href="mailto:admin@peopleconnect.co.za">admin@peopleconnect.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 PeopleConnect ZA (Pty) Ltd &bull; Reg. no. 2026/349570/07</span>
+      <span>Built in South Africa 🇿🇦</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- SCRIPTS                                                                  -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<script>
+  // Mobile nav toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+
+  // ▼▼▼ FORMSPREE: replace FORM_ID with your real ID from formspree.io/forms ▼▼▼
+  const FORMSPREE_URL = 'https://formspree.io/f/mlgzobyl';
+  // ▲▲▲ only this one line needs changing ▲▲▲
+
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.form-submit');
+    const success = document.getElementById('formSuccess');
+    const originalHTML = btn.innerHTML;
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(this),
+      });
+
+      if (res.ok) {
+        this.reset();
+        btn.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        const data = await res.json().catch(() => ({}));
+        const msg = data.errors?.map(err => err.message).join(', ')
+          || 'Something went wrong. Please email admin@peopleconnect.co.za directly.';
+        alert(msg);
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+      }
+    } catch (_) {
+      alert('Network error. Please check your connection and try again.');
+      btn.disabled = false;
+      btn.innerHTML = originalHTML;
+    }
+  });
+
+  // Scroll-based header shadow
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.style.boxShadow = window.scrollY > 8
+      ? '0 2px 20px rgba(0,0,0,.10)'
+      : 'none';
+  }, { passive: true });
+
+  // Intersection observer for subtle fade-in on cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.who-card, .pricing-card, .step, .mockup-card').forEach(el => {
+    el.style.cssText += 'opacity:0; transform:translateY(20px); transition: opacity .5s ease, transform .5s ease, box-shadow .2s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
