@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PeopleConnect ZA — EngageZA Platform</title>
-  <meta name="description" content="EngageZA connects people to the organisations that serve them. Book a live demo today." />
+  <title>PeopleConnect ZA — EngageZA &amp; SmallBiz Web</title>
+  <meta name="description" content="PeopleConnect ZA builds digital tools for South African organisations. EngageZA connects communities to the organisations that serve them. SmallBiz Web gets local businesses online fast." />
   <style>
     /* ── Reset & tokens ────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -349,6 +349,98 @@
       margin-top: 4px;
     }
 
+    /* ── ②b PRODUCTS ──────────────────────────────────────────────────── */
+    #products { background: var(--light); }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border);
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 4px 4px 0 0;
+    }
+    .product-card.pc-blue::before  { background: #1B4FD8; }
+    .product-card.pc-orange::before { background: #F97316; }
+
+    .product-icon {
+      width: 58px; height: 58px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .product-card.pc-blue  .product-icon { background: rgba(27,79,216,.10); }
+    .product-card.pc-orange .product-icon { background: rgba(249,115,22,.10); }
+
+    .product-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -.02em;
+      line-height: 1.1;
+    }
+    .product-subtitle {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-top: 6px;
+    }
+    .product-card.pc-blue  .product-subtitle { color: #1B4FD8; }
+    .product-card.pc-orange .product-subtitle { color: #F97316; }
+
+    .product-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .product-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .product-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--mid);
+    }
+    .pf-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .product-card.pc-blue  .pf-dot { background: #1B4FD8; }
+    .product-card.pc-orange .pf-dot { background: #F97316; }
+
     /* ── ③  WHAT IS ENGAGEZA ───────────────────────────────────────────── */
     #what {
       background: var(--white);
@@ -640,6 +732,42 @@
     }
     .pricing-features .tick svg { width: 10px; height: 10px; stroke: var(--blue); }
 
+    .pricing-toggle {
+      display: flex;
+      background: var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      width: fit-content;
+      margin: 0 auto 48px;
+      gap: 4px;
+    }
+    .pricing-toggle-btn {
+      padding: 10px 28px;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+    }
+    .pricing-toggle-btn.active {
+      background: var(--white);
+      color: var(--dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pricing-pane { display: none; }
+    .pricing-pane.active { display: grid; }
+
+    .pricing-hosting {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
     /* ── ⑦  CONTACT ────────────────────────────────────────────────────── */
     #contact { background: var(--white); }
 
@@ -819,6 +947,7 @@
     @media (max-width: 720px) {
       section { padding: 56px 0; }
 
+      .product-grid,
       .who-grid,
       .pricing-grid { grid-template-columns: 1fr; }
 
@@ -862,9 +991,9 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="#what">Product</a></li>
+        <li><a href="#products">Our Products</a></li>
+        <li><a href="#what">EngageZA</a></li>
         <li><a href="#who">Who it's for</a></li>
-        <li><a href="#how">How it works</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -881,9 +1010,9 @@
   </div>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#what" onclick="closeMobile()">Product</a>
+    <a href="#products" onclick="closeMobile()">Our Products</a>
+    <a href="#what" onclick="closeMobile()">EngageZA</a>
     <a href="#who" onclick="closeMobile()">Who it's for</a>
-    <a href="#how" onclick="closeMobile()">How it works</a>
     <a href="#pricing" onclick="closeMobile()">Pricing</a>
     <a href="#contact" onclick="closeMobile()">Contact</a>
     <a href="#contact" class="btn btn-primary" onclick="closeMobile()">Book a Demo</a>
@@ -933,6 +1062,67 @@
           <div class="stat-label">For South African orgs</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- ②b OUR PRODUCTS                                                          -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<section id="products">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Our Products</span>
+      <h2 class="section-title">Two products, one mission</h2>
+      <p class="section-sub">We build digital tools that help South African organisations and businesses connect, grow, and serve their communities better.</p>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- EngageZA -->
+      <div class="product-card pc-blue">
+        <div class="product-icon">💬</div>
+        <div>
+          <div class="product-name">EngageZA</div>
+          <div class="product-subtitle">For municipalities, political parties &amp; organisations</div>
+        </div>
+        <p class="product-desc">A branded citizen engagement platform with live chat, AI-powered FAQs, announcements and analytics. Your community, always connected.</p>
+        <ul class="product-features">
+          <li><span class="pf-dot"></span> Live chat with agents</li>
+          <li><span class="pf-dot"></span> AI chatbot</li>
+          <li><span class="pf-dot"></span> Announcements portal</li>
+          <li><span class="pf-dot"></span> Multi-channel (web + WhatsApp)</li>
+        </ul>
+        <div>
+          <a href="https://engageza-connect.vercel.app/o/cape-town" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            See live demo
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- SmallBiz Web -->
+      <div class="product-card pc-orange">
+        <div class="product-icon">🌐</div>
+        <div>
+          <div class="product-name">SmallBiz Web</div>
+          <div class="product-subtitle">For local businesses, service providers &amp; entrepreneurs</div>
+        </div>
+        <p class="product-desc">Whether you're starting from scratch or need a professional upgrade — we build clean, mobile-friendly websites that work hard for your business.</p>
+        <ul class="product-features">
+          <li><span class="pf-dot"></span> Mobile responsive</li>
+          <li><span class="pf-dot"></span> WhatsApp integration</li>
+          <li><span class="pf-dot"></span> Contact &amp; enquiry forms</li>
+          <li><span class="pf-dot"></span> Live in 7 days</li>
+        </ul>
+        <div>
+          <a href="https://mmatholomaupi-ecd.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-orange">
+            See example site
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1122,10 +1312,17 @@
     <div class="section-header">
       <span class="section-label">Pricing</span>
       <h2 class="section-title">Simple, transparent pricing</h2>
-      <p class="section-sub">Start free. Scale as you grow. No surprises.</p>
+      <p class="section-sub">Choose a product to see its pricing. No hidden fees, no surprises.</p>
     </div>
 
-    <div class="pricing-grid">
+    <!-- Product toggle -->
+    <div class="pricing-toggle">
+      <button class="pricing-toggle-btn active" data-target="pricing-engageza">💬 EngageZA</button>
+      <button class="pricing-toggle-btn" data-target="pricing-smallbiz">🌐 SmallBiz Web</button>
+    </div>
+
+    <!-- EngageZA pricing -->
+    <div id="pricing-engageza" class="pricing-pane pricing-grid active">
       <!-- Starter -->
       <div class="pricing-card">
         <div>
@@ -1136,26 +1333,11 @@
           <p class="pricing-desc" style="margin-top:8px;">30-day free trial — no credit card required. Perfect for getting started.</p>
         </div>
         <ul class="pricing-features">
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            1 branded hub
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Up to 100 community members
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Announcements &amp; basic chat
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            AI assistant (limited)
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Email support
-          </li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>1 branded hub</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Up to 100 community members</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Announcements &amp; basic chat</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>AI assistant (limited)</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Email support</li>
         </ul>
         <a href="#contact" class="btn btn-outline" style="justify-content:center;">Start free trial</a>
       </div>
@@ -1165,37 +1347,17 @@
         <div>
           <div class="pricing-tier">Growth</div>
           <div class="pricing-price">
-            <span class="currency">R</span>
-            <span class="amount">499</span>
-            <span class="period">/month</span>
+            <span class="currency">R</span><span class="amount">499</span><span class="period">/month</span>
           </div>
           <p class="pricing-desc">The complete toolkit for organisations serious about community engagement.</p>
         </div>
         <ul class="pricing-features">
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            1 branded hub
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Unlimited community members
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Full AI assistant
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Analytics &amp; engagement reports
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Priority email &amp; phone support
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Custom domain support
-          </li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>1 branded hub</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Unlimited community members</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Full AI assistant</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Analytics &amp; engagement reports</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Priority email &amp; phone support</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Custom domain support</li>
         </ul>
         <a href="#contact" class="btn btn-primary" style="justify-content:center;">Get started</a>
       </div>
@@ -1210,34 +1372,83 @@
           <p class="pricing-desc" style="margin-top:8px;">For large municipalities, national parties, or multi-location businesses with complex needs.</p>
         </div>
         <ul class="pricing-features">
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Multiple branded hubs
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Unlimited everything
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Custom AI training
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            API &amp; system integrations
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            Dedicated account manager
-          </li>
-          <li>
-            <div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>
-            SLA &amp; on-site training
-          </li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Multiple branded hubs</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Unlimited everything</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Custom AI training</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>API &amp; system integrations</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Dedicated account manager</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>SLA &amp; on-site training</li>
         </ul>
         <a href="#contact" class="btn btn-outline" style="justify-content:center;">Talk to us</a>
       </div>
     </div>
+
+    <!-- SmallBiz Web pricing -->
+    <div id="pricing-smallbiz" class="pricing-pane pricing-grid">
+      <!-- Starter -->
+      <div class="pricing-card">
+        <div>
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-price">
+            <span class="currency">R</span><span class="amount">1,500</span><span class="period">once-off</span>
+          </div>
+          <p class="pricing-hosting">+ R199/month hosting</p>
+          <p class="pricing-desc" style="margin-top:10px;">A clean, professional website to get your business online fast.</p>
+        </div>
+        <ul class="pricing-features">
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Up to 5 pages</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Mobile responsive design</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>WhatsApp button integration</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Contact &amp; enquiry form</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Basic SEO setup</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Live within 7 days</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" style="justify-content:center;">Get started</a>
+      </div>
+
+      <!-- Growth -->
+      <div class="pricing-card featured">
+        <div>
+          <div class="pricing-tier">Growth</div>
+          <div class="pricing-price">
+            <span class="currency">R</span><span class="amount">2,500</span><span class="period">once-off</span>
+          </div>
+          <p class="pricing-hosting">+ R299/month hosting</p>
+          <p class="pricing-desc" style="margin-top:10px;">More pages, more power — for businesses ready to grow their online presence.</p>
+        </div>
+        <ul class="pricing-features">
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Up to 8 pages</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Everything in Starter</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Custom domain setup</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Google Maps integration</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>1 content update/month</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Priority support</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="justify-content:center;">Get started</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="pricing-card">
+        <div>
+          <div class="pricing-tier">Premium</div>
+          <div class="pricing-price">
+            <span class="currency">R</span><span class="amount">4,500</span><span class="period">once-off</span>
+          </div>
+          <p class="pricing-hosting">+ R499/month hosting &amp; SEO</p>
+          <p class="pricing-desc" style="margin-top:10px;">The full package for businesses that want to rank, grow, and stand out online.</p>
+        </div>
+        <ul class="pricing-features">
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Up to 15 pages</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Everything in Growth</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Advanced SEO optimisation</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Google Analytics setup</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Dedicated account manager</li>
+          <li><div class="tick"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 4 7.5 8 2.5"/></svg></div>Quarterly site refresh</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" style="justify-content:center;">Talk to us</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1250,7 +1461,7 @@
       <div class="contact-info">
         <span class="section-label">Contact us</span>
         <h2 class="section-title">Let's talk about your organisation</h2>
-        <p>We'd love to show you how EngageZA can work for your municipality, party, or business. Fill in the form and we'll be in touch within one business day.</p>
+        <p>We'd love to show you how our products can work for your organisation or business. Fill in the form and we'll be in touch within one business day.</p>
 
         <div class="contact-details">
           <div class="contact-item">
@@ -1316,10 +1527,17 @@
             <label for="interest">I'm interested in</label>
             <select id="interest" name="interest">
               <option value="">Select an option…</option>
-              <option value="demo">Booking a live demo</option>
-              <option value="starter">Starting a free trial</option>
-              <option value="growth">Growth plan</option>
-              <option value="enterprise">Enterprise pricing</option>
+              <optgroup label="EngageZA">
+                <option value="engageza-demo">EngageZA — Book a live demo</option>
+                <option value="engageza-trial">EngageZA — Start a free trial</option>
+                <option value="engageza-growth">EngageZA — Growth plan</option>
+                <option value="engageza-enterprise">EngageZA — Enterprise pricing</option>
+              </optgroup>
+              <optgroup label="SmallBiz Web">
+                <option value="smallbiz-starter">SmallBiz Web — Starter</option>
+                <option value="smallbiz-growth">SmallBiz Web — Growth</option>
+                <option value="smallbiz-premium">SmallBiz Web — Premium</option>
+              </optgroup>
               <option value="other">Something else</option>
             </select>
           </div>
@@ -1375,6 +1593,7 @@
       <div class="footer-links">
         <h4>Product</h4>
         <ul>
+          <li><a href="#products">Our Products</a></li>
           <li><a href="#what">What is EngageZA</a></li>
           <li><a href="#who">Who it's for</a></li>
           <li><a href="#how">How it works</a></li>
@@ -1417,6 +1636,16 @@
     hamburger.classList.remove('open');
     hamburger.setAttribute('aria-expanded', 'false');
   }
+
+  // Pricing toggle
+  document.querySelectorAll('.pricing-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pricing-toggle-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.pricing-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.target).classList.add('active');
+    });
+  });
 
   // ▼▼▼ FORMSPREE: replace FORM_ID with your real ID from formspree.io/forms ▼▼▼
   const FORMSPREE_URL = 'https://formspree.io/f/mlgzobyl';
@@ -1476,7 +1705,7 @@
     });
   }, { threshold: 0.12 });
 
-  document.querySelectorAll('.who-card, .pricing-card, .step, .mockup-card').forEach(el => {
+  document.querySelectorAll('.who-card, .pricing-card, .product-card, .step, .mockup-card').forEach(el => {
     el.style.cssText += 'opacity:0; transform:translateY(20px); transition: opacity .5s ease, transform .5s ease, box-shadow .2s ease';
     observer.observe(el);
   });
