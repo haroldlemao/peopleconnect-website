@@ -3,8 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1B4FD8" />
   <title>PeopleConnect ZA — EngageZA &amp; SmallBiz Web</title>
   <meta name="description" content="PeopleConnect ZA builds digital tools for South African organisations. EngageZA connects communities to the organisations that serve them. SmallBiz Web gets local businesses online fast." />
+  <link rel="canonical" href="https://www.peopleconnect.co.za/" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.peopleconnect.co.za/" />
+  <meta property="og:site_name" content="PeopleConnect ZA" />
+  <meta property="og:title" content="PeopleConnect ZA — EngageZA &amp; SmallBiz Web" />
+  <meta property="og:description" content="PeopleConnect ZA builds digital tools for South African organisations. EngageZA connects communities to the organisations that serve them. SmallBiz Web gets local businesses online fast." />
+  <meta property="og:image" content="https://www.peopleconnect.co.za/og-image.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PeopleConnect ZA — EngageZA &amp; SmallBiz Web" />
+  <meta name="twitter:description" content="PeopleConnect ZA builds digital tools for South African organisations. EngageZA connects communities to the organisations that serve them. SmallBiz Web gets local businesses online fast." />
+  <meta name="twitter:image" content="https://www.peopleconnect.co.za/og-image.svg" />
+  <!-- SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='6' cy='10' r='6' fill='%231B4FD8'/%3E%3Ccircle cx='14' cy='10' r='6' fill='%230F35B8'/%3E%3Ccircle cx='10' cy='10' r='2.2' fill='white'/%3E%3C/svg%3E" />
   <style>
     /* ── Reset & tokens ────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -67,6 +83,10 @@
                   box-shadow var(--transition);
     }
     .btn:active { transform: translateY(1px); }
+    .btn:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px;
+    }
 
     .btn-primary {
       background: var(--blue);
